@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <button @click = "doGet">get请求</button>
+        <button @click = "doPost">post请求</button>
+        
+        <p>获取笑话:</p>
+        <ul>
+            <li v-for="(item,index) in jokes">
+                <p>{{index}}:{{item}}</p>
+            </li>
+        </ul>
+    </div>
+    
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el:"#app",
+            data:{
+                jokes:["暂无笑话","hahaha"]
+            },
+            methods:{
+                doGet:function(){
+                    // 注意在回调中 this被改变了,需要现将this保存起来
+                    var that = this 
+                    axios.get("https://autumnfish.cn/api/joke/list?num=5")
+                    .then(function(response){
+                        console.log(response)
+                        that.jokes = response.data.jokes
+                        console.log("jokes:"+this.jokes[2])
+                    })
+                },
+                doPost:function(){
+                    axios.post("https://autumnfish.cn/api/user/reg",{
+                        username:"dragonforest"
+                    }).then(function(response){
+                        console.log(response)
+                    })
+                },
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head> </head>
+  <body>
+    <div id="app">
+        姓：{{fname}} 名：{{lname}} 全名：{{getFullName()}}
+        姓：{{fname}} 名：{{lname}} 全名：{{getFullName()}}
+        姓：{{fname}} 名：{{lname}} 全名：{{getFullName()}}
+    </div>
+
+    <script src="vue.js"></script>
+    <script>
+      var vm = new Vue({
+        el: "#app",
+        data: {
+          fname: "han",
+          lname: "longlin",
+        },
+        computed: {
+          fullName() {
+            console.log("fullName属性被计算")
+            return this.fname + this.lname;
+          },
+        },
+        methods: {
+          getFullName() {
+            console.log("getFullName方法被调用")
+            return this.fname + this.lname;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

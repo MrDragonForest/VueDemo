@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link type="text/css" rel="styleSheet" href="./css/book.css" />
+  </head>
+  <body>
+    <!-- 主体区域 -->
+    <section id="todoapp">
+      <!-- 输入框 -->
+      <header class="header">
+        <h1>小黑记事本</h1>
+        <input
+          type="text"
+          autofocus="autofocus"
+          autocomplete="off"
+          placeholder="请输入任务"
+          class="new-todo"
+          v-model="inputValue"
+          @keyup.enter="addInput"
+        />
+      </header>
+      <!-- 列表区域 -->
+      <section class="main">
+        <ul class="todo-list">
+          <li class="todo" v-for="(item,index) in list">
+            <div class="view">
+              <span class="index">{{index+1}}</span>
+              <label>{{item}}</label>
+              <button class="destory" @click="removeItem(index)">clear</button>
+            </div>
+          </li>
+        </ul>
+      </section>
+      <!-- 统计和清空 -->
+      <footer class="footer" v-show="list.length!=0">
+         <span>待办项:{{list.length}}条</span>
+         <button class="clear-all" @click= "clearAll">清空</button>
+      </footer>
+    </section>
+    <!-- 底部 -->
+    <footer class="info">
+      <p>
+        <a href="https://www.baidu.com">
+          <img
+            src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fa4.att.hudong.com%2F27%2F67%2F01300000921826141299672233506.jpg&refer=http%3A%2F%2Fa4.att.hudong.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612421575&t=8cc947f333454da425e7b2ee5708cb17"
+            alt=""
+          />
+        </a>
+      </p>
+    </footer>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      var app = new Vue({
+        el: "#todoapp",
+        data: {
+          list: ["写代码", "打王者", "刷痘印", "看电视"],
+          inputValue: "好好学习,天天向上",
+        },
+        methods: {
+          addInput: function () {
+            this.list.push(this.inputValue);
+          },
+          removeItem: function (index) {
+            this.list.splice(index, 1);
+            console.log("removeItem:" + index);
+          },
+          clearAll: function () {
+            this.list = []
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

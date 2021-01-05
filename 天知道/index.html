@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="main">
+      <h1>天知道</h1>
+      <!-- 搜索框 -->
+      <div class="search-area">
+        <input
+          type="text"
+          placeholder="输入城市"
+          autocomplete="false"
+          autofocus="autofocus"
+          v-model="searchContent"
+          @keyup.enter="searchWeather"
+        />
+        <button @click="searchWeather">搜索</button>
+      </div>
+      <!-- 搜索结果 -->
+      <div class="search-result" v-show="searchResult.length>0">
+        <h3 >搜索结果</h3>
+        <p v-for="item in searchResult">{{item}}</p>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      var app = new Vue({
+        el: "#main",
+        data: {
+          searchContent: "北京",
+          searchResult: [],
+        },
+        methods: {
+          searchWeather: function () {
+            var that = this;
+            axios
+              .get(
+                "http://wthrcdn.etouch.cn/weather_mini?city=" +
+                  this.searchContent
+              )
+              .then(function (response) {
+                console.log(response);
+                that.searchResult = []
+                var todayWeather = response.data.data.forecast[0];
+                var city = response.data.data.city
+                that.searchResult.push("城市:" +city )
+                that.searchResult.push("日期:" +todayWeather.date )
+                that.searchResult.push("风力:" +todayWeather.fengli )
+                that.searchResult.push("风向:" +todayWeather.fengxiang)
+                that.searchResult.push("高温:" +todayWeather.high )
+                that.searchResult.push("低温:" +todayWeather.low )
+                that.searchResult.push("天气:" +todayWeather.type )
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

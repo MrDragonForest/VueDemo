@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <div id="app">
+      <h1>{{title}}</h1>
+      <img
+        v-show="shown"
+        src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fmedia-cdn.tripadvisor.com%2Fmedia%2Fphoto-s%2F01%2F3e%2F05%2F40%2Fthe-sandbar-that-links.jpg&refer=http%3A%2F%2Fmedia-cdn.tripadvisor.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1611716195&t=bba0baf2ef3b2e95bbdc19123b05f2ba"
+        alt=""
+      />
+      <button @click="showImg">显示图片</button>
+      <button @click="hideImg">隐藏图片</button>
+    </div>
+    <script src="vue.min.js"></script>
+    <script>
+      var vm = new Vue({
+        //配置
+        el: "#app",
+        data: {
+          title: "韩龙龙林",
+          shown: true,
+        },
+        methods: {
+          showImg: function () {
+            this.shown = true;
+          },
+          hideImg: function () {
+            this.shown = false;
+          },
+        },
+      });
+    </script>
+
+    <div id="mask">
+      <img src="{{imgArray[index]}}" alt="" />
+      <button v-bind:click="pref">上一张</button>
+      <button v-bind:click="next">下一张</button>
+    </div>
+    <script>
+      var vue = new Vue({
+        el: "#mask",
+      });
+    </script>
+    <div id="fortest">
+      <ul>
+        <li v-for="item in arr">你好,{{item}}</li>
+      </ul>
+      <button @click="addli">添加元素</button>
+      <button @click="delli">删除元素</button>
+    </div>
+    <script>
+      var app = new Vue({
+        el: "#fortest",
+        data: {
+          arr: ["北京", "上海", "天津", "沧州", "廊坊"],
+        },
+        methods: {
+          delli: function () {
+            this.arr.shift();
+          },
+          addli: function () {
+            this.arr.push("新天地");
+          },
+        },
+      });
+    </script>
+
+    <div id="function">
+      <button @click="showName('haha')">调用公共方法1</button>
+      <button @click="showName('gaga','huohuo')">调用公共方法2</button>
+      <input type="text" value="haha" @keyup.enter="sayHi">
+    </div>
+    <script>
+      var ff = new Vue({
+        el: "#function",
+        methods: {
+          showName: function (p1, p2) {
+            var str = "";
+            if (p1 != undefined) {
+              str = "参数:" + p1;
+            }
+            if (p2 != undefined) {
+              str =  str + ",参数:" + p2;
+            }
+            alert(str);
+          },
+          sayHi:function(){
+            alert("hello啊,小兄弟")
+          }
+        },
+      });
+    </script>
+  </body>
+</html>
